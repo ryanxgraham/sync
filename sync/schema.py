@@ -42,10 +42,11 @@ class Schema:
         data_type
         """
         if field_name in fields:
+            logger.error('Failed to add %s', field_name)
             raise KeyError(f'{field_name} already exists in the schema. To change the field name, use the edit_field method. To change the data type, use the edit_data_type method.', field_name)
         fields[field_name] = data_type
-        logger.info(f'{field_name} with type {data_type} added to fields', field_name, data_type)
-        logger.debug(f'{fields}', fields)
+        logger.info('%s with type %s added to fields', field_name, data_type)
+        logger.debug('%s', fields)
 
     def edit_field(self, field_name: str, new_field_name:str):
         """
@@ -57,13 +58,13 @@ class Schema:
         new_field_name
         """
         if field_name not in fields:
-            logger.error(f'Failed to edit {field_name}', field_name)
+            logger.error('Failed to edit %s', field_name)
             raise KeyError(f'{field_name} does not exist in fields.', field_name)
         for _ in range(len(fields)):
             k,v = fields.popitem(False)
             fields[new_field_name if field_name == k else k] = v
-        logger.info(f'{field_name} changed to {new_field_name}', field_name, new_field_name)
-        logger.debug(f'{fields}', fields)
+        logger.info('%s changed to %s', field_name, new_field_name)
+        logger.debug('%s', fields)
 
     def edit_data_type(self, field_name: str, data_type: DataType):
         """
@@ -75,7 +76,7 @@ class Schema:
         data_type
         """
         if field_name not in fields:
-            logger.error(f'Failed to change data_type of field: {field_name}', field_name)            
+            logger.error('Failed to change data_type of field: %s', field_name)            
             raise KeyError(f'{field_name} does not exist in fields', field_name)
         fields[field_name] = data_type
         logger.info(f'{field_name} set to {data_type}', field_name, data_type)
@@ -89,7 +90,7 @@ class Schema:
         field_name
         """
         if field_name not in fields:
-            logger.error(f'Failed to remove {field_name} from fields', field_name)
+            logger.error('Failed to remove %s from fields', field_name)
             raise KeyError(f'{field_name} does not exist in fields', field_name)
         del fields[field_name]
         logger.info(f'Field {field_name} removed', field_name)
